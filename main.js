@@ -102,7 +102,7 @@ const drawSilhouette = () => {
 
   ctx.fillStyle = "#5f656e";
   ctx.strokeStyle = "rgba(255, 255, 255, 0.82)";
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
   ctx.fill();
   ctx.stroke();
 };
@@ -110,7 +110,7 @@ const drawSilhouette = () => {
 const drawDot = (dot, idx) => {
   if (SHOW_DOT) {
     ctx.beginPath();
-    ctx.arc(dot.x, dot.y, 5, 0, Math.PI * 2);
+    ctx.arc(dot.x, dot.y, dot.size ?? 3, 0, Math.PI * 2);
     ctx.fill();
   }
   if (SHOW_CONSTRAINT) {
@@ -129,24 +129,33 @@ const drawDot = (dot, idx) => {
 };
 
 const drawEyes = (dot) => {
-  const SPACING = 15;
+  const SPACING = 20;
+  const SIZE = 15;
+
   const lastDot = chain[1];
   const dx = dot.x - lastDot.x;
   const dy = dot.y - lastDot.y;
-  const angle = Math.atan2(dy, dx) + Math.PI / 2;
 
+  const angle = Math.atan2(dy, dx);
   const eye1 = {
-    x: dot.x + Math.cos(angle) * SPACING,
-    y: dot.y + Math.sin(angle) * SPACING,
+    x: dot.x + Math.cos(angle + Math.PI / 2) * SPACING,
+    y: dot.y + Math.sin(angle + Math.PI / 2) * SPACING,
   };
   const eye2 = {
-    x: dot.x + Math.cos(angle) * -SPACING,
-    y: dot.y + Math.sin(angle) * -SPACING,
+    x: dot.x + Math.cos(angle - Math.PI / 2) * SPACING,
+    y: dot.y + Math.sin(angle - Math.PI / 2) * SPACING,
   };
 
   // draw eyes
-  drawDot({ ...eye1, size: 5 });
-  drawDot({ ...eye2, size: 5 });
+  drawDot({ ...eye1, size: SIZE });
+  drawDot({ ...eye2, size: SIZE });
+
+  // draw pupils
+  ctx.beginPath();
+  ctx.arc(eye1.x, eye1.y, 5, 0, Math.PI * 2);
+  ctx.arc(eye2.x, eye2.y, 5, 0, Math.PI * 2);
+  ctx.fillStyle = "black";
+  ctx.fill();
 };
 
 let curvature = 0;
@@ -231,12 +240,52 @@ const drawFishTailWithCurvature = () => {
   ctx.stroke();
 };
 
+const drawFishFin = (segmentIndex, size) => {
+  const FIN_SEGMENT = segmentIndex ?? 2;
+  const SIZE = size ?? 20;
+
+  const segment = chain[FIN_SEGMENT];
+  const lastSegment = chain[FIN_SEGMENT - 2];
+
+  const dx = segment.x - lastSegment.x;
+  const dy = segment.y - lastSegment.y;
+
+  const angle = Math.atan2(dy, dx);
+
+  const fin1 = {
+    x: segment.x + Math.cos(angle + Math.PI / 2) * SIZE * 3.5,
+    y: segment.y + Math.sin(angle + Math.PI / 2) * SIZE * 3.5,
+  };
+  const fin2 = {
+    x: segment.x + Math.cos(angle - Math.PI / 2) * SIZE * 3.5,
+    y: segment.y + Math.sin(angle - Math.PI / 2) * SIZE * 3.5,
+  };
+
+  // add OFFSET
+  ctx.beginPath();
+  ctx.moveTo(segment.x, segment.y);
+  ctx.quadraticCurveTo((segment.x + fin1.x) / 2, (segment.y + fin1.y) / 2, fin1.x, fin1.y);
+  ctx.quadraticCurveTo(
+    (fin1.x + lastSegment.x) / 2,
+    (fin1.y + lastSegment.y) / 2,
+    lastSegment.x,
+    lastSegment.y
+  );
+  ctx.quadraticCurveTo((lastSegment.x + fin2.x) / 2, (lastSegment.y + fin2.y) / 2, fin2.x, fin2.y);
+  ctx.quadraticCurveTo((fin2.x + segment.x) / 2, (fin2.y + segment.y) / 2, segment.x, segment.y);
+
+  ctx.fillStyle = "rgba(255, 255, 255, 0.82)";
+  ctx.fill();
+};
+
 const draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // chain.forEach((dot, idx) => drawDot(dot, idx));
   calculateSilhouette();
-  SHOW_SILHOUETTE && drawSilhouette();
   calculateCurvature();
+  drawFishFin(2, 18);
+  drawFishFin(4, 10);
+  SHOW_SILHOUETTE && drawSilhouette();
   drawFishTailWithCurvature();
   drawEyes(chain[0]);
 };
