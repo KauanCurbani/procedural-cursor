@@ -1,9 +1,9 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let rootDot = { x: canvas.width / 2, y: canvas.height / 2, size: 35 };
+let rootDot = { x: canvas.width / 2, y: canvas.height / 2, size: 22 };
 let chain = [
-  { x: canvas.width / 2, y: canvas.height / 2, size: 32 },
+  { x: canvas.width / 2, y: canvas.height / 2, size: 12 },
   { x: canvas.width / 2, y: canvas.height / 2, size: 38 },
   { x: canvas.width / 2, y: canvas.height / 2, size: 32 },
   { x: canvas.width / 2, y: canvas.height / 2, size: 24 },
