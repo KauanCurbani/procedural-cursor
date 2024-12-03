@@ -23,7 +23,7 @@ window.addEventListener("resize", () => {
   canvas.height = window.innerHeight;
 });
 
-const CONSTRAINT = 32;
+const CONSTRAINT = 50;
 const SHOW_CONSTRAINT = false;
 const SHOW_DOT = true;
 const SHOW_SEGMENT = false;
@@ -288,6 +288,7 @@ const draw = () => {
   calculateSilhouette();
   calculateCurvature();
   drawFishFin(2, 18);
+  drawFishFin(4, 10);
   drawFishFin(4, 10);
   SHOW_SILHOUETTE && drawSilhouette();
   drawFishTailWithCurvature();
