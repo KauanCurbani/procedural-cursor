@@ -18,6 +18,10 @@ canvas.height = window.innerHeight;
 canvas.addEventListener("mousemove", (e) => {
   rootDot = { x: e.clientX, y: e.clientY, size: rootDot.size };
 });
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 
 const CONSTRAINT = 32;
 const SHOW_CONSTRAINT = false;
