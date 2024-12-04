@@ -1,6 +1,8 @@
-![Alt Text](/banner.gif)
-
-# Procedural Cursor Trail
+<p align="center">
+    <img alt="github-readme-terminal" src="./banner.gif">
+    <br>
+    <b>✨ Procedural Fish Cursor Trail 🚀</b>
+</p>
 
 ## Overview
 
@@ -16,13 +18,13 @@ This project creates a procedural cursor trail using HTML5 Canvas and JavaScript
 ## Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/procedural-cursor.git
-    ```
+   ```bash
+   git clone https://github.com/yourusername/procedural-cursor.git
+   ```
 2. Navigate to the project directory:
-    ```bash
-    cd procedural-cursor
-    ```
+   ```bash
+   cd procedural-cursor
+   ```
 3. Open `index.html` in your preferred web browser.
 
 ## Usage
