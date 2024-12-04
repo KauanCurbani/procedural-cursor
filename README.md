@@ -1,7 +1,7 @@
 <p align="center">
     <img alt="github-readme-terminal" src="./banner.gif">
     <br>
-    <b>✨ Procedural Fish Cursor Trail 🚀</b>
+    <b>✨ Procedural Fish Cursor Trail 🚀 - Work in Progress</b>
 </p>
 
 ## Overview
